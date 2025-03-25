@@ -4,9 +4,8 @@ namespace DisasterPrediction.Api.Data;
 
 public class DisasterRiskDto
 {
-    public DisasterRiskDto(int disasterTypeId, string regionId, string disasterType, int riskScore, string riskLevel, bool alertTriggered)
+    public DisasterRiskDto(string regionId, string disasterType, int riskScore, string riskLevel, bool alertTriggered)
     {
-        DisasterTypeId = disasterTypeId;
         RegionId = regionId;
         DisasterType = disasterType;
         RiskScore = riskScore;
@@ -14,7 +13,6 @@ public class DisasterRiskDto
         AlertTriggered = alertTriggered;
     }
 
-    [JsonIgnore]
     public int DisasterTypeId { get; set; }
     public string RegionId { get; set; }
     public string DisasterType { get; set; }

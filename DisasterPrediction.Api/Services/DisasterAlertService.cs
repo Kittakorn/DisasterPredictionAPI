@@ -214,7 +214,7 @@ public class DisasterAlertService : IDisasterAlertService
             var riskLevel = _riskCalculateService.GetRiskLevel(risk.Value);
             var isAlertTriggered = _riskCalculateService.IsAlertTriggered(risk.Value, disasterType.ThresholdScore);
 
-            disasterRisks.Add(new DisasterRiskDto(disasterType.DisasterTypeId, region.RegionId, risk.Key, risk.Value, riskLevel, isAlertTriggered));
+            disasterRisks.Add(new DisasterRiskDto(region.RegionId, risk.Key, risk.Value, riskLevel, isAlertTriggered));
         }
 
         return disasterRisks;
@@ -222,14 +222,20 @@ public class DisasterAlertService : IDisasterAlertService
 
     private async Task CreateAlertAsync(List<DisasterRiskDto> disasterRisks)
     {
-        var alerts = disasterRisks
-            .Select(disasterRisk => new Alert
+        var alerts = new List<Alert>();
+        foreach (var disasterRisk in disasterRisks)
+        {
+            var disasterType = await GetDisasterTypeAsync(disasterRisk.RegionId, disasterRisk.DisasterType);
+            if (disasterType == null)
+                continue;
+
+            alerts.Add(new Alert
             {
-                DisasterTypeId = disasterRisk.DisasterTypeId,
+                DisasterTypeId = disasterType.DisasterTypeId,
                 RiskScore = disasterRisk.RiskScore,
                 RiskLevel = disasterRisk.RiskLevel
-            })
-            .ToList();
+            });
+        }
 
         await _context.Alerts.AddRangeAsync(alerts);
         await _context.SaveChangesAsync();
