@@ -22,7 +22,6 @@ public class DisastersController : ControllerBase
         return Ok(new { message = "Regions created successfully" });
     }
 
-
     [HttpPost("alert-settings")]
     public async Task<IActionResult> AlertSettings(IEnumerable<AlertRequest> requests)
     {
