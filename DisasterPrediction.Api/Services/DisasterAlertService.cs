@@ -157,7 +157,7 @@ public class DisasterAlertService : IDisasterAlertService
             return;
         }
 
-        var message = string.Join("\n", alerts.Select(alert => $"{alert.DisasterType}: {alert.RiskLevel}"));
+        var message = string.Join("\n", alerts.Select(alert => $"{alert.RegionId} - {alert.DisasterType}: {alert.RiskLevel}"));
 
         if (!string.IsNullOrEmpty(request.PhoneNumber))
         {
