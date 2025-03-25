@@ -31,7 +31,7 @@ jobs:
       with:
         push: true
         tags: kittakornazure.azurecr.io/${{ secrets.AzureAppService_ContainerUsername_6027d42fe38b4bdbb095f4a30ec57f07 }}/kittakornazure/disasterpredictionapi:${{ github.sha }}
-        file: ./Dockerfile
+        file: ./DisasterPrediction.Api/Dockerfile
 
   deploy:
     runs-on: ubuntu-latest
