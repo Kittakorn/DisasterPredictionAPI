@@ -9,7 +9,7 @@ public static class DistributedCacheExtensions
 {
     private const int cachExpirationTime = 15;
 
-    private static JsonSerializerOptions serializerOptions = new JsonSerializerOptions
+    private static JsonSerializerOptions serializerOptions = new()
     {
         PropertyNamingPolicy = null,
         WriteIndented = true,
